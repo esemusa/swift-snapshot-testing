@@ -107,9 +107,11 @@ private func compare(_ old: UIImage, _ new: UIImage, precision: Float, colorPrec
   if colorPrecision >= 1 {
     var differentByteCount = 0
     let threshold = 1 - precision
-    for byte in 0..<byteCount {
+    var byte = 0
+    while byte < byteCount {
       if oldBytes[byte] != newerBytes[byte] { differentByteCount += 1 }
       if Float(differentByteCount) / Float(byteCount) > threshold { return false}
+      byte += 1
     }
   } else {
     var differentPixelsCount = 0
