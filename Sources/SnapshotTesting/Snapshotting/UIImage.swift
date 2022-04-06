@@ -122,11 +122,15 @@ private func compare(_ old: UIImage, _ new: UIImage, precision: Float, colorPrec
     while pixel < pixelCount {
       let startPixelColor = pixel * imageContextBytesPerPixel
       let nextPixel = startPixelColor + imageContextBytesPerPixel
+      
+      pixel += 1
 
       var colorByte = startPixelColor
       while colorByte < nextPixel {
         let oldColor = oldBytes[colorByte]
         let newColor = newerBytes[colorByte]
+        
+        colorByte += 1
 
         if oldColor == newColor { continue }
 
@@ -137,11 +141,9 @@ private func compare(_ old: UIImage, _ new: UIImage, precision: Float, colorPrec
           differentPixelsCount += 1
           break
         }
-        colorByte += 1
       }
 
       if Float(differentPixelsCount) / Float(pixelCount) > pixelThreshold { return false }
-      pixel += 1
     }
   }
   return true
